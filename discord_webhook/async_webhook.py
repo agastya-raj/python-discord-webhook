@@ -1,7 +1,7 @@
 import asyncio
 import json
 import logging
-from contextlib import asynccontextmanager
+from async_generator import asynccontextmanager
 from functools import partial
 from http.client import HTTPException
 
@@ -116,7 +116,8 @@ class AsyncDiscordWebhook(DiscordWebhook):
         if remove_embeds:
             self.remove_embeds()
         self.remove_files(clear_attachments=False)
-        if webhook_id := json.loads(response.content.decode("utf-8")).get("id"):
+        webhook_id = json.loads(response.content.decode("utf-8")).get("id")
+        if webhook_id:
             self.id = webhook_id
         return response
 

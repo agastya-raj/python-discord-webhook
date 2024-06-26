@@ -63,7 +63,8 @@ class DiscordEmbed:
         self.author = kwargs.get("author")
         self.fields = kwargs.get("fields", [])
         self.set_color(kwargs.get("color"))
-        if timestamp := kwargs.get("timestamp"):
+        timestamp = kwargs.get("timestamp")
+        if timestamp:
             self.set_timestamp(timestamp)
 
     def set_title(self, title: str) -> None:
@@ -458,9 +459,11 @@ class DiscordWebhook:
             self.remove_embeds()
         self.remove_files(clear_attachments=False)
         response_content = json.loads(response.content.decode("utf-8"))
-        if webhook_id := response_content.get("id"):
+        webhook_id = response_content.get("id")
+        if webhook_id:
             self.id = webhook_id
-        if attachments := response_content.get("attachments"):
+        attachments = response_content.get("attachments")
+        if attachments:
             self.attachments = attachments
         return response
 
